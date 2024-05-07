@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .user-info {
+            margin-bottom: 20px;
+        }
+        .user-info p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Detail</h1>
+        <div class="user-info" id="userInfo">
+            <!-- User data will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        // Parse user ID from URL query string
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('id');
+
+        // Fetch data for specific user
+        fetch(`https://trybe-dot-h-02-415813.uc.r.appspot.com/users/${userId}`)
+            .then(response => response.json())
+            .then(data => {
+                const userInfo = document.getElementById('userInfo');
+                userInfo.innerHTML = `
+                    <p><strong>ID:</strong> ${data.user.id}</p>
+                    <p><strong>Name:</strong> ${data.user.name}</p>
+                    <p><strong>NIM:</strong> ${data.user.nim}</p>
+                    <p><strong>Email:</strong> ${data.user.email}</p>
+                `;
+            })
+            .catch(error => console.error('Error fetching user detail:', error));
+    </script>
+</body>
+</html>
